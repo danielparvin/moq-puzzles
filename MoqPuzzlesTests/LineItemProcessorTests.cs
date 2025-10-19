@@ -16,12 +16,13 @@ namespace MoqPuzzlesTests {
                 UNKNOWN_PROCEDURE_CODE,
                 DEFAULT_LINE_ITEM_CHARGE,
                 JULY_01_2024_UTC);
+            // Set the mock behavior to strict and configure intentionally null-returning setups.
             //var mockCodeInfoRepository = new Mock<ICodeInfoRepository>();
             var mockCodeInfoRepository = new Mock<ICodeInfoRepository>(MockBehavior.Strict);
             mockCodeInfoRepository
                 .Setup(repo => repo.GetDescriptionOfCode(
                     It.Is<string>(procedureCode => procedureCode == UNKNOWN_PROCEDURE_CODE)))
-                .Returns((string)null);
+                .Returns((string?)null);
             //var mockMedicareRepository = new Mock<IMedicareRepository>();
             var mockMedicareRepository = new Mock<IMedicareRepository>(MockBehavior.Strict);
             mockMedicareRepository
@@ -46,13 +47,15 @@ namespace MoqPuzzlesTests {
                 DEFAULT_LINE_ITEM_CHARGE,
                 JULY_01_2024_UTC);
             var mockCodeInfoRepository = new Mock<ICodeInfoRepository>(MockBehavior.Strict);
+            // Set up the correct, applicable overload of GetDescriptionOfCode()!
             mockCodeInfoRepository
                 .Setup(mockRepo => mockRepo.GetDescriptionOfCode(
                     //It.Is<string>(procedureCode => procedureCode == UNKNOWN_PROCEDURE_CODE),
                     //It.Is<string>(procedureCode => procedureCode == UNKNOWN_PROCEDURE_CODE)))
                     It.Is<string>(procedureCode => procedureCode == UNKNOWN_PROCEDURE_CODE)))
-                .Returns((string)null);
+                .Returns((string?)null);
             var mockMedicareRepository = new Mock<IMedicareRepository>(MockBehavior.Strict);
+            // Set up the correct, applicable overload of GetMedicareAllowance()!
             mockMedicareRepository
                 .Setup(mockRepo => mockRepo.GetMedicareAllowance(
                     //It.Is<string>(procedureCode => procedureCode == UNKNOWN_PROCEDURE_CODE),

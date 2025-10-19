@@ -21,6 +21,8 @@ namespace MoqPuzzlesTests {
             var testLineItem = getTestLineItemWithUnknownProcedureCode();
             testBill.LineItems.Add(testLineItem);
             billProcessor.ProcessBill(testBill);
+            // unchangedLineItem was a different class instance, so it was not equal to testLineItem!
+            // Compare the adjustments on the two line items instead.
             //var unchangedLineItem = getTestLineItemWithUnknownProcedureCode();
             //Assert.Equal(unchangedLineItem, testLineItem);
             var expectedNumberOfAdjustments = 0;
@@ -33,6 +35,9 @@ namespace MoqPuzzlesTests {
             //var mockLineItemProcessor = new Mock<ILineItemProcessor>();
             var mockLineItemProcessor = new Mock<ILineItemProcessor>(MockBehavior.Strict);
             mockLineItemProcessor
+                // The original code set up the mock to match the line item argument against the return value of 
+                // getTestLineItemWithSutureProcedureCode().
+                // Match the value of the line item's ProcedureCode instead, using a custom function.
                 //.Setup(mockLineItemProcessor =>
                 //    mockLineItemProcessor.GetCodeDescriptionAndAllowance(getTestLineItemWithSutureProcedureCode()))
                 .Setup(mockLineItemProcessor =>
